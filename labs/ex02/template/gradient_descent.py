@@ -3,7 +3,34 @@
 
 Gradient Descent
 """
+def compute_loss(y, tx, w, MSE=True):
+    """Calculate the loss using either MSE or MAE.
 
+    Args:
+        y: numpy array of shape=(N, )
+        tx: numpy array of shape=(N,2)
+        w: numpy array of shape=(2,). The vector of model parameters.
+
+    Returns:
+        the value of the loss (a scalar), corresponding to the input parameters w.
+    """
+    #sample size
+    N=len(y)
+
+    
+    #compute the error matrix
+    e=y- tx @ w 
+    
+    
+    
+    if MSE :
+    # compute the MSE loss or MAE loss
+        Lw= (0.5*N)*(e @ e) #e.T @ e
+    else :
+        #Lw= (1/N) * (np.sum(np.sum ( np.abs(e.reshape(-1, 1)) , axis=1), axis=0))
+        Lw=(1/N) * sum(abs(e))
+
+    return Lw
 
 def compute_gradient(y, tx, w):
     """Computes the gradient at w.
@@ -16,12 +43,16 @@ def compute_gradient(y, tx, w):
     Returns:
         An array of shape (2, ) (same shape as w), containing the gradient of the loss at w.
     """
-    # ***************************************************
-    # INSERT YOUR CODE HERE
-    # TODO: compute gradient vector
-    # ***************************************************
-    raise NotImplementedError
+    #sample size
+    N=len(y)
 
+    #compute error
+    e=y - tx @ w
+
+    #compute gradient
+    grad=(-1/N)* (tx.T @ e)
+
+    return grad
 
 def gradient_descent(y, tx, initial_w, max_iters, gamma):
     """The Gradient Descent (GD) algorithm.
@@ -42,16 +73,14 @@ def gradient_descent(y, tx, initial_w, max_iters, gamma):
     losses = []
     w = initial_w
     for n_iter in range(max_iters):
-        # ***************************************************
-        # INSERT YOUR CODE HERE
-        # TODO: compute gradient and loss
-        # ***************************************************
-        raise NotImplementedError
-        # ***************************************************
-        # INSERT YOUR CODE HERE
-        # TODO: update w by gradient
-        # ***************************************************
-        raise NotImplementedError
+        # computing gradient and loss
+       
+        grad=compute_gradient(y, tx, w)
+
+        loss=compute_loss(y, tx, w)
+        
+        # update w by gradient
+        w = w - gamma * grad
 
         # store w and loss
         ws.append(w)

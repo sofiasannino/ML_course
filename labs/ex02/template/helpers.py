@@ -27,8 +27,8 @@ def load_data(sub_sample=True, add_outlier=False):
 
     if add_outlier:
         # outlier experiment
-        height = np.concatenate([height, [1.1, 1.2]])
-        weight = np.concatenate([weight, [51.5 / 0.454, 55.3 / 0.454]])
+        height = np.concatenate([height, [1.1, 1.2, 1.1, 1.3]])
+        weight = np.concatenate([weight, [51.5 / 0.454, 55.3 / 0.454, 57.8 / 0.454, 60.1 / 0.454]])
 
     return height, weight, gender
 
@@ -56,7 +56,7 @@ def batch_iter(y, tx, batch_size, num_batches=1, shuffle=True):
     Generate a minibatch iterator for a dataset.
     Takes as input two iterables (here the output desired values 'y' and the input data 'tx')
     Outputs an iterator which gives mini-batches of `batch_size` matching elements from `y` and `tx`.
-    Data can be randomly shuffled to avoid ordering in the original data messing with the randomness of the minibatches.
+    Data can be randomly shuffled to avoid ordering in the original data, messing with the randomness of the minibatches.
 
     Example:
 
